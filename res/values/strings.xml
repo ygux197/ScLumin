@@ -3,5 +3,8 @@
 
     <string name="app_name">ScLumin</string>
     <string name="title_activity_ads2">Ads2Activity</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

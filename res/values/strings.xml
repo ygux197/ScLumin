@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ScLumin_test2</string>
-    <string name="hello_world">Hello world!</string>
-
+    <string name="app_name">ScLumin</string>
+    <string name="setting">设置</string>
+    <string name="exit">退出</string>
+	<string name="unlock">解锁</string>
+	
 </resources>

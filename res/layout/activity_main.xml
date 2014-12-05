@@ -6,7 +6,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     tools:context=".AdsActivity" >
-	<com.hbcmcc.sclumin.AutoLoopViewPager
+	<com.hbcmcc.sclumin.loopview.AutoLoopViewPager
 		android:id="@+id/pager"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent" 

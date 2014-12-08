@@ -4,6 +4,20 @@
     <string name="app_name">ScLumin</string>
     <string name="setting">设置</string>
     <string name="exit">退出</string>
-	<string name="unlock">解锁</string>
-	
+    <string name="unlock">解锁</string>
+    <string name="title_lock">锁定工号</string>
+	<string name="title_unlock">解锁工号</string>
+    <string name="prompt_id">工号</string>
+    <string name="prompt_password">锁定密码</string>
+    <string name="lock">锁定</string>
+    <string name="prompt_lock_suc">锁定成功</string>
+    <string name="prompt_lock_fail">锁定失败</string>
+    <string name="prompt_unlock_suc">解锁成功</string>
+    <string name="prompt_unlock_fail">解锁失败</string>
+    <string name="error_invalid_id">错误的工号</string>
+    <string name="error_invalid_pwd">解锁密码至少为4位</string>
+    <string name="error_incorrect">工号或密码错误</string>
+    <string name="error_id_required">请填写工号</string>
+    <string name="error_pwd_required">请填写密码</string>
+
 </resources>

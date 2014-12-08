@@ -4,24 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hbcmcc.sclumin.R;
+import com.hbcmcc.sclumin.lock.UnlockActivity;
+import com.hbcmcc.sclumin.util.Config;
 import com.hbcmcc.sclumin.util.ExitApplication;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.view.WindowManager;
+import android.view.WindowManager.LayoutParams;
 import android.widget.Toast;
 
-public class AdsActivity extends FragmentActivity {
+public class AdsActivity extends FragmentActivity  {
 
 	class AdsPagerAdapter extends FragmentStatePagerAdapter {
+
 		private List<Fragment> fragments;
 		  
 		public AdsPagerAdapter(FragmentManager fm) {
@@ -61,15 +68,19 @@ public class AdsActivity extends FragmentActivity {
 	private AutoLoopViewPager pager = null;
 	private long exitTime = 0;
 	
-	private static final int DEFAULT_AUTOSCROLL_INTERVAL = 3000;
+	private static final int DEFAULT_AUTOSCROLL_INTERVAL = 500;
 
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		if (Config.DEBUG) {
+			Log.e(AdsActivity.class.toString(), "AdsActivity onCreate() taskid:" + this.getTaskId());
+		}
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
 		ExitApplication.getInstance().addActivity(this);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		
+		setContentView(R.layout.activity_main);
 		
 		pager = (AutoLoopViewPager)findViewById(R.id.pager);
 		adsAdapter = new AdsPagerAdapter(getSupportFragmentManager());
@@ -140,15 +151,38 @@ public class AdsActivity extends FragmentActivity {
 			ExitApplication.getInstance().exit();
 			break;
 		case R.id.unlock_menu:
+			Intent intent = new Intent(this, UnlockActivity.class);
+			startActivity(intent);
 			break;
 		}
 		return true;
 	}
 	
+	@Override
+	protected void onResume() {
+		if (Config.DEBUG) {
+			Log.e(AdsActivity.class.toString(), "AdsActivity onResume() taskid:" + this.getTaskId());
+		}
+		Window window = this.getWindow();
+		window.addFlags(LayoutParams.FLAG_DISMISS_KEYGUARD);
+		window.addFlags(LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+		window.addFlags(LayoutParams.FLAG_TURN_SCREEN_ON);
+		super.onResume();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		if (Config.DEBUG) {
+			Log.e(AdsActivity.class.toString(), "AdsActivity onDestroy() taskid:" + this.getTaskId());
+		}
+		super.onDestroy();
+	}
+
+
 	/*
 	 * 两次返回退出程序
 	 */
-	private void doubleExit() {
+	public void doubleExit() {
 		if ((System.currentTimeMillis() - exitTime) > 2000) {  
 		    Toast.makeText(AdsActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();  
 		    exitTime = System.currentTimeMillis();  
@@ -156,5 +190,5 @@ public class AdsActivity extends FragmentActivity {
 		    ExitApplication.getInstance().exit();
 		  }  
 	}
-	
+
 }

@@ -1,0 +1,21 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >  
+  
+    <PreferenceCategory android:title="展示设置" >
+        <PreferenceScreen
+            android:key="ads_pref"
+            android:title="设置本地图片" >
+        </PreferenceScreen>
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="系统设置" >
+        <PreferenceScreen
+            android:key="lock_pref"
+            android:title="重置锁定工号" />
+        <PreferenceScreen
+            android:key="version_pref"
+            android:title="版本号" 
+            android:summary="1.0.0">
+        </PreferenceScreen>    
+    </PreferenceCategory>
+  
+</PreferenceScreen>  

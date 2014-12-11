@@ -1,21 +1,22 @@
 package com.hbcmcc.sclumin.lock;
 
 import com.hbcmcc.sclumin.R;
-import com.hbcmcc.sclumin.loopview.AdsActivity;
-import com.hbcmcc.sclumin.service.ScLuminService;
-import com.hbcmcc.sclumin.util.Config;
+import com.hbcmcc.sclumin.gallery.GalleryMainActivity;
+import com.hbcmcc.sclumin.util.Properties;
 import com.hbcmcc.sclumin.util.ExitApplication;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager.LayoutParams;
@@ -33,18 +34,18 @@ public class LockActivity extends Activity {
 	public Button lockButton = null;
 	private View progressView = null;
 	private View lockFormView = null;
-	public UserLockTask mAuthTask = null;
 	private long exitTime = 0;
+	private String action;
+	public ActionBar actionBar;
 
 	public static final int MIN_PWD_LENGTH = 4;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		if (Config.DEBUG) {
-			Log.e(LockActivity.class.toString(), "LockActivity onCreate() taskid:" + this.getTaskId());
-		}
 		super.onCreate(savedInstanceState);
-		
+		actionBar = getActionBar();
+		actionBar.setTitle(R.string.title_lock);
+		actionBar.show();
 		setContentView(R.layout.activity_lock);
 		ExitApplication.getInstance().addActivity(this);
 		
@@ -73,13 +74,28 @@ public class LockActivity extends Activity {
 		
 		progressView = findViewById(R.id.lock_progress);
 		lockFormView = findViewById(R.id.lock_form);
+		action = this.getIntent().getAction();
+		if (Properties.LOCK_ACTION.equalsIgnoreCase(action)) {
+			actionBar.setDisplayHomeAsUpEnabled(true);
+		} else {
+			actionBar.setDisplayHomeAsUpEnabled(false);
+		}
 	}
-	
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (Properties.LOCK_ACTION.equalsIgnoreCase(action) && 
+				android.R.id.home == item.getItemId()) {
+			setResult(Activity.RESULT_CANCELED);
+			this.finish();
+			return true;
+		} else {
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
 	@Override
 	protected void onResume() {
-		if (Config.DEBUG) {
-			Log.e(LockActivity.class.toString(), "LockActivity onResume() taskid:" + this.getTaskId());
-		}
 		Window window = this.getWindow();
 		window.addFlags(LayoutParams.FLAG_DISMISS_KEYGUARD);
 		window.addFlags(LayoutParams.FLAG_SHOW_WHEN_LOCKED);
@@ -89,22 +105,12 @@ public class LockActivity extends Activity {
 
 	@Override
 	protected void onDestroy() {
-		if (Config.DEBUG) {
-			Log.e(LockActivity.class.toString(), "LockActivity onDestroy()!");
-		}
 		super.onDestroy();
 	}
 	
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent event) {
-		if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-			if (event.getAction() == KeyEvent.ACTION_DOWN && event.getRepeatCount() == 0) {  
-				this.doubleExit();
-			}
-			return true;
-		}
 		return super.dispatchKeyEvent(event);
-		
 	}
 	
 	/*
@@ -151,15 +157,33 @@ public class LockActivity extends Activity {
 		if (cancel) {
 			focusView.requestFocus();
 		} else {
-			startAuth(id, pwd);
+			postExecute(startAuth(id, pwd));
 		}
 		
 	}
 	
-	public void startAuth(String id, String pwd) {
-		showProgress(true);
-		mAuthTask = new UserLockTask(id, pwd);
-		mAuthTask.execute((Void) null);
+	public boolean startAuth(String id, String pwd) {
+		SharedPreferences sharedPref = this.getSharedPreferences(Properties.SHAREDPREFERENCES_NAME, MODE_APPEND);
+		Editor editor = sharedPref.edit();
+		editor.putString("id", id);
+		editor.putString("pwd", pwd);
+		editor.commit();
+		return true;
+	}
+	
+	public void postExecute(Boolean result) {
+
+		if (result) {
+			if (Properties.LOCK_ACTION.equalsIgnoreCase(action)) {
+				Intent intent = new Intent().putExtra("req", 100);
+				setResult(Activity.RESULT_OK, intent);
+				finish();
+			} else {
+				Toast.makeText(LockActivity.this, getString(R.string.prompt_lock_suc), Toast.LENGTH_SHORT).show(); 
+				Intent intent = new Intent(LockActivity.this, GalleryMainActivity.class);
+				startActivity(intent);
+			}
+		} 
 	}
 	
 	public void showProgress(final boolean show) {
@@ -195,42 +219,6 @@ public class LockActivity extends Activity {
 
 	private boolean isPwdValid(String pwd) {
 		return pwd.length() >= MIN_PWD_LENGTH;
-	}
-
-	public class UserLockTask extends AsyncTask<Void, Void, Boolean> {
-		
-		public final String id;
-		public final String pwd;
-		
-		public UserLockTask(String id, String pwd) {
-			this.id = id;
-			this.pwd = pwd;
-		}
-
-		@Override
-		protected Boolean doInBackground(Void... arg0) {
-			ScLuminService.id = this.id;
-			ScLuminService.pwd = this.pwd;
-			return true;
-		}
-		
-		@Override
-		protected void onCancelled() {
-			mAuthTask = null;
-			showProgress(false);
-		}
-
-		@Override
-		protected void onPostExecute(Boolean result) {
-			mAuthTask = null;
-			showProgress(false);
-
-			if (result) {
-				Toast.makeText(LockActivity.this, getString(R.string.prompt_lock_suc), Toast.LENGTH_SHORT).show(); 
-				Intent intent = new Intent(LockActivity.this, AdsActivity.class);
-				startActivity(intent);
-			} 
-		}
 	}
 
 }

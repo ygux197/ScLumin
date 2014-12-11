@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/sub_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@color/menu_bg"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="@string/preview"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp" 
+        android:layout_weight="1">
+
+        <GridView
+            android:id="@+id/img_gv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numColumns="3"
+            tools:listitem="@layout/gallery_item_view" >
+        </GridView>
+
+        <Button
+            android:id="@+id/repick_btn"
+            style="@style/repick_btn_style"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:alpha="0.9"
+            android:text="@string/repick"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/pickok_btn"
+                style="@style/ok_btn_style"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:layout_weight="0.4"
+                android:background="@drawable/top_bar"
+                android:text="@string/ok"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/imgpick_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:layout_weight="0.4"
+                android:background="@color/light_gray"
+                android:text="@string/pick_img"
+                android:textColor="@android:color/black" />
+
+            <Button
+                android:id="@+id/skip_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:layout_weight="0.4"
+                android:background="@color/light_gray"
+                android:text="@string/skip"
+                android:textColor="@android:color/black"
+                android:visibility="visible" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

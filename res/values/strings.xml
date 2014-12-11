@@ -12,12 +12,26 @@
     <string name="lock">锁定</string>
     <string name="prompt_lock_suc">锁定成功</string>
     <string name="prompt_lock_fail">锁定失败</string>
-    <string name="prompt_unlock_suc">解锁成功</string>
+    <string name="prompt_unlock_suc">验证成功</string>
     <string name="prompt_unlock_fail">解锁失败</string>
     <string name="error_invalid_id">错误的工号</string>
     <string name="error_invalid_pwd">解锁密码至少为4位</string>
     <string name="error_incorrect">工号或密码错误</string>
     <string name="error_id_required">请填写工号</string>
     <string name="error_pwd_required">请填写密码</string>
+    <string name="pick_img">选择本机图片</string>
+    <string name="skip">跳过</string>
+    <string name="send">发送</string>
+    <string name="back">后退</string>
+    <string name="choose">选择</string>
+    <string name="preview">预览</string>
+    <string name="ok">确认</string>
+    <string name="cancel_pick">取消选择</string>
+    <string name="repick">重新选择</string>
+    <string name="config">设置</string>
+    <string name="exit_msg">确认退出么？</string>
+    <string name="hint">提示</string>
+    <string name="cancel">取消</string>
+    <string name="local_img">本地图片设置</string>
 
 </resources>

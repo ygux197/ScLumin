@@ -1,10 +1,24 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<style name="NoTitle" parent="android:Theme">
+	<style name="NoTitle" parent="android:Theme.Light">
 	    <item name="android:windowNoTitle">true</item>
 	</style>
 	
 	<style name="LockTheme" parent="android:Theme.Light">
+	</style>
+	
+	
+	<style name="title_bar">
+        <item name="android:textColor">#d9f3ff</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+	<style name="repick_btn_style">
+	    <item name="android:textColor">#ffffff</item>
+	    <item name="android:background">#ff0000</item>
+	</style>
+	
+	<style name="ok_btn_style">
+	    <item name="android:textColor">#d9f3ff</item>
 	</style>
 
 </resources>

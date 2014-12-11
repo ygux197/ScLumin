@@ -9,42 +9,64 @@
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission   android:name="android.permission.DISABLE_KEYGUARD"/>
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
-        <service android:name="com.hbcmcc.sclumin.service.ScLuminService"></service>
-         <activity
+        android:theme="@android:style/Theme.Holo.Light" >
+        <service android:name="com.hbcmcc.sclumin.service.ScLuminService" >
+        </service>
+
+        <activity
             android:name="com.hbcmcc.sclumin.service.BootstrapActivity"
             android:label="@string/app_name" >
-             <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.hbcmcc.sclumin.loopview.AdsActivity"
-            android:label="@string/app_name" 
-            android:launchMode="singleTask">
+        <activity android:name="com.hbcmcc.sclumin.loopview.AdsActivity" >
         </activity>
-        <activity
-            android:name="com.hbcmcc.sclumin.lock.LockActivity"
-            android:label="@string/title_lock" 
-            android:windowSoftInputMode="adjustResize|stateVisible"
-            android:theme="@style/LockTheme"
-            android:launchMode="singleTask">
+        <activity android:name="com.hbcmcc.sclumin.lock.LockActivity" >
+            <intent-filter>
+                <action android:name="ScLumin.ACTION_LOCK" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
-        <activity
-            android:name="com.hbcmcc.sclumin.lock.UnlockActivity"
-            android:label="@string/title_unlock" 
-            android:windowSoftInputMode="adjustResize|stateVisible"
-            android:theme="@style/LockTheme"
-            android:launchMode="singleTask">
-         </activity>
+        <activity android:name="com.hbcmcc.sclumin.lock.UnlockActivity" >
+            <intent-filter>
+                <action android:name="ScLumin.ACTION_UNLOCK" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.hbcmcc.sclumin.gallery.GalleryMainActivity" >
+            <intent-filter>
+                <action android:name="ScLumin.ACTION_CHANGE_LOCAL_IMG" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.hbcmcc.sclumin.gallery.GalleryActivity" >
+            <intent-filter>
+                <action android:name="ScLumin.ACTION_PICK" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.hbcmcc.sclumin.preference.PreferenceActivity" >
+            <intent-filter>
+                <action android:name="ScLumin.ACTION_PREF" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

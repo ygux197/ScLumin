@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <set name="uri">
+        <string>/storage/emulated/0/DCIM/Camera/IMG_20141127_165836.jpg</string>
+        <string>/storage/emulated/0/DCIM/Camera/IMG_20141127_165834.jpg</string>
+        <string>/storage/emulated/0/DCIM/Camera/IMG_20141202_092003.jpg</string>
+        <string>/storage/emulated/0/DCIM/Camera/IMG_20141202_092314.jpg</string>
+    </set>
+    <set name="url">
+        <string>/storage/emulated/0/DCIM/Camera/IMG_20141127_165836.jpg</string>
+        <string>/storage/emulated/0/DCIM/Camera/IMG_20141129_124103.jpg</string>
+        <string>/storage/emulated/0/DCIM/Camera/IMG_20141129_124052.jpg</string>
+    </set>
+</map>
